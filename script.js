@@ -41,28 +41,24 @@ class Location {
 }
 
 class workout {
-  constructor(distance, duration) {
+  constructor(distance, duration, type) {
     this.distance = distance;
     this.duration = duration;
+    this.type = type;
   }
 }
 
 class Running extends workout {
-  constructor(cadence, type) {
-    super(distance, duration);
+  constructor(distance, duration, type, cadence) {
+    super(distance, duration, type);
     this.cadence = cadence;
-    this.type = type;
   }
 
   html(distance, duration, cadence) {
-    return `<li class="workout workout--${
-      inputType.value
-    }" data-id="1234567890">
+    return `<li class="workout workout--${inputType.value}" data-id="1234567890">
       <h2 class="workout__title">Running on ${month} ${day}</h2>
       <div class="workout__details">
-        <span class="workout__icon">${
-          inputType.value === 'running' ? '🏃‍♂️' : '🚴‍♀️'
-        }</span>
+        <span class="workout__icon">🏃‍♂️</span>
         <span class="workout__value">${distance.value}</span>
         <span class="workout__unit">km</span>
       </div>
@@ -159,6 +155,13 @@ navigator.geolocation.getCurrentPosition(
 
             form.classList.add('hidden');
             map.on('click', onMapClick);
+            const runner = new Running(
+              inputDistance.value,
+              inputDuration.value,
+              inputCadence.value,
+              inputType.value
+            );
+            console.log(runner);
 
             const html = `<li class="workout workout--${
               inputType.value
